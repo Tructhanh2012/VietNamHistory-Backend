@@ -3,9 +3,12 @@ package com.second.version.controller;
 import com.second.version.article.ArticleEntity;
 import com.second.version.article.ArticleRepo;
 import com.second.version.article.ArticleService;
+import com.second.version.dto.request.CreateGeographicRequest;
 import com.second.version.dto.request.IdRequest;
 import com.second.version.dto.request.UpdateProfileRequest;
+import com.second.version.dto.response.GeographicResponse;
 import com.second.version.dto.response.RankResponse;
+import com.second.version.geographic.GeographicService;
 import com.second.version.hashtag.HashtagEntity;
 import com.second.version.hashtag.HashtagRepo;
 import com.second.version.result.ResultRepo;
@@ -28,6 +31,7 @@ public class GeneralController {
     private ResultService resultService;
     private UserService userService;
     private ArticleRepo articleRepo;
+    private GeographicService geographicService;
 
     @PostMapping("/articles-hashtag")
     public ResponseEntity<?> getArticlesByHashtag(@RequestBody IdRequest idRequest) {
@@ -54,7 +58,7 @@ public class GeneralController {
     }
 
     @PostMapping("/article")
-    public ResponseEntity<?> getSingleArticle(@RequestBody IdRequest idRequest){
+    public ResponseEntity<?> getSingleArticle(@RequestBody IdRequest idRequest) {
         ArticleEntity article = articleRepo.findById(idRequest.getId()).orElseThrow();
         return ResponseEntity.ok(article);
     }
@@ -63,7 +67,14 @@ public class GeneralController {
     @GetMapping("/list-articles")
     public ResponseEntity<?> getListArticle() {
         List<ArticleEntity> articleEntity = articleService.getAllArticles();
-        return  ResponseEntity.ok(articleEntity);
+        return ResponseEntity.ok(articleEntity);
     }
+
+    @GetMapping("/map-info")
+    public ResponseEntity<?> getMapInfo() {
+        List<GeographicResponse> responses = geographicService.getMapInfo();
+        return ResponseEntity.ok(responses);
+    }
+
 
 }
