@@ -21,7 +21,7 @@ public class AuthenticationController {
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         AuthenticationResponse authenticationResponse = service.register(request);
         if(authenticationResponse == null){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok("Register fail");
         }
         return ResponseEntity.ok(authenticationResponse);
     }
