@@ -13,5 +13,6 @@ public class GeographicResponse {
     long id;
     String name;
     String description;
+    String image;
     List<ArticleInfoResponse> articleInfoResponses;
 }

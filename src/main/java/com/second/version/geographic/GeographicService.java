@@ -40,6 +40,7 @@ ProvinceRepo provinceRepo;
             geographicResponse.setArticleInfoResponses(articleInfoResponses);
             geographicResponse.setDescription(geographicEntity.getDescription());
             geographicResponse.setName(geographicEntity.getProvince().getName());
+            geographicResponse.setImage(geographicEntity.getImage());
             responses.add(geographicResponse);
         }
 
@@ -51,6 +52,7 @@ ProvinceRepo provinceRepo;
         ProvinceEntity provinceEntity = provinceRepo.findById(createGeographicRequest.getProvinceId()).orElseThrow();
         GeographicEntity geographicEntity = new GeographicEntity();
         geographicEntity.setDescription(createGeographicRequest.getDescription());
+        geographicEntity.setImage(createGeographicRequest.getImage());
         geographicEntity.setProvince(provinceEntity);
         geographicEntity.setArticleId(createGeographicRequest.getArticleId());
         geographicRepo.save(geographicEntity);

@@ -12,5 +12,6 @@ import java.util.List;
 public class CreateGeographicRequest {
     long provinceId;
     String description;
+    String image;
     List<Long> articleId;
 }
