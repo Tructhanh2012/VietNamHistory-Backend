@@ -25,7 +25,7 @@ public class UserService {
     public UserEntity editUser(UpdateProfileRequest updateProfileRequest){
         UserEntity user = userRepository.findById(updateProfileRequest.getId());
         user.setName(updateProfileRequest.getName());
-        user.setPassword(passwordEncoder.encode(updateProfileRequest.getPassword()));
+     //   user.setPassword(passwordEncoder.encode(updateProfileRequest.getPassword()));
         return userRepository.save(user);
     }
     public UserEntity createEditor(CreateEditorRequest createEditorRequest){
