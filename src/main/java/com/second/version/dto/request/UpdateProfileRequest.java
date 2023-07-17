@@ -6,5 +6,5 @@ import lombok.Data;
 public class UpdateProfileRequest {
     long id;
     String name;
-    String password;
+//    String password;
 }

@@ -44,6 +44,8 @@ public class AuthenticationService {
             jwtToken = jwtService.generateToken(user);
             refreshToken = jwtService.generateRefreshToken(user);
             saveUserToken(savedUser, jwtToken);
+        }else{
+            return null;
         }
 
         return AuthenticationResponse.builder()
@@ -56,6 +58,7 @@ public class AuthenticationService {
         Optional<UserEntity> userExist = repository.findByEmail(email);
         String jwtToken = "";
         String refreshToken = "";
+
         if (userExist.isEmpty()) {
             var user = UserEntity.builder()
                     .name(request.getName())
