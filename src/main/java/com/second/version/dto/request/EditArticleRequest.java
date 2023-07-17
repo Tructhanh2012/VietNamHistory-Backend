@@ -11,4 +11,5 @@ public class EditArticleRequest {
     String image;
     @Column(length = 10000)
     String content;
+    Long provinceId;
 }

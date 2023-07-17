@@ -22,6 +22,7 @@ import java.util.List;
 public class MemberController {
     private QuestionService questionService;
     private ResultService resultService;
+    //user làm quiz
     @PostMapping("/create-quiz")
     public ResponseEntity<?> createQuiz(@RequestBody IdRequest idRequest){
         List<QuestionEntity> quiz = questionService.createQuiz(idRequest.getId());

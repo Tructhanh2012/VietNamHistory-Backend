@@ -3,6 +3,7 @@ package com.second.version.controller;
 import com.second.version.article.ArticleRepo;
 import com.second.version.article.ArticleService;
 import com.second.version.dto.request.CreateEditorRequest;
+import com.second.version.dto.request.UpdateGeographicArticleRequest;
 import com.second.version.dto.request.CreateGeographicRequest;
 import com.second.version.dto.request.IdRequest;
 import com.second.version.geographic.GeographicService;
@@ -84,6 +85,12 @@ public class AdminController {
     public ResponseEntity<?> createGeographic(@RequestBody CreateGeographicRequest createGeographicRequest) {
         geographicService.createGeographic(createGeographicRequest);
         return ResponseEntity.ok("Create success");
+    }
+
+    @PutMapping("/update-geographic-articles")
+    public ResponseEntity<?> updateGeographicArticle(@RequestBody UpdateGeographicArticleRequest updateGeographicArticleRequest){
+        geographicService.updateGeographicArticle(updateGeographicArticleRequest);
+        return ResponseEntity.ok("Update success");
     }
 
     @GetMapping("/provinces")

@@ -5,6 +5,8 @@ import com.second.version.dto.request.EditArticleRequest;
 import com.second.version.dto.response.ArticleByEditor;
 import com.second.version.hashtag.HashtagEntity;
 import com.second.version.hashtag.HashtagRepo;
+import com.second.version.province.ProvinceEntity;
+import com.second.version.province.ProvinceRepo;
 import com.second.version.user.UserEntity;
 import com.second.version.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -21,13 +23,18 @@ public class ArticleService {
     private ArticleRepo articleRepo;
     private UserRepository userRepository;
     private HashtagRepo hashtagRepo;
-
+    private ProvinceRepo provinceRepo;
     public ArticleEntity createArticle(CreateArticleRequest request) {
         ArticleEntity articleEntity = articleRepo.findArticleEntityByTitle(request.getTitle());
         if (articleEntity == null) {
             UserEntity user = userRepository.findById(request.getEditorId());
             HashtagEntity hashtag = hashtagRepo.findById(request.getHashtagId()).orElseThrow();
-            ArticleEntity article = new ArticleEntity(hashtag, user, request.getTitle(), request.getImage(), request.getContent(), request.getDate(), request.getMonth());
+            ProvinceEntity province = null;
+            if (request.getProvinceId() != null) {
+                province = provinceRepo.findById(request.getProvinceId()).orElseThrow();
+            }
+            ArticleEntity article = new ArticleEntity(hashtag, user, request.getTitle(), request.getImage(),
+                                    request.getContent(), request.getDate(), request.getMonth(), province);
             articleRepo.save(article);
             return article;
         }
@@ -60,14 +67,22 @@ public class ArticleService {
         ArticleEntity articleEntity = articleRepo.findById(request.getArticleId()).orElseThrow();
         if (articleEntity != null) {
             HashtagEntity hashtag = hashtagRepo.findById(request.getHashtagId()).orElseThrow();
+
+            if (articleRepo.findByTitleAndIdNot(request.getTitle(),request.getArticleId()) == null)
+                articleEntity.setTitle(request.getTitle());
+            else return null;
+
+            Long provinceId = request.getProvinceId();
+            if (provinceId != null) {
+                ProvinceEntity province = provinceRepo.findById(provinceId).orElseThrow();
+                articleEntity.setProvince(province);
+            } else articleEntity.setProvince(null);
+
             articleEntity.setHashtagEntity(hashtag);
             articleEntity.setContent(request.getContent());
             articleEntity.setImage(request.getImage());
-            articleEntity.setTitle(request.getTitle());
-
         }
         return articleRepo.save(articleEntity);
-
     }
 
     public List<ArticleByEditor> getListArticleByEditor(long id) {

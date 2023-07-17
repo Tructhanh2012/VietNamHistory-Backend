@@ -10,10 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ArticleRepo extends JpaRepository<ArticleEntity, Long> {
-
-    //getAllArticle
     List<ArticleEntity> findAll();
-@Query("SELECT a from ArticleEntity a where a.title = :title")
+    ArticleEntity findByTitleAndIdNot(String title, long id);
+    @Query("SELECT a from ArticleEntity a where a.title = :title")
     ArticleEntity findArticleEntityByTitle(@Param("title") String title);
 
     List<ArticleEntity> findArticleEntitiesByHashtagEntity_Id(long id);

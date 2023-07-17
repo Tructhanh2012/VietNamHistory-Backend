@@ -7,9 +7,9 @@ import lombok.Data;
 public class CreateArticleRequest {
     long editorId;
     long hashtagId;
+    Long provinceId;
     String title;
     @Column(length = 10000)
-
     String image;
     @Column(length = 10000)
     String content;
