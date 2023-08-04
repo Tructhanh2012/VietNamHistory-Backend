@@ -1,5 +1,7 @@
 package com.second.version.article;
 
+import com.second.version.event.Event;
+import com.second.version.generation.Generation;
 import com.second.version.hashtag.HashtagEntity;
 import com.second.version.province.ProvinceEntity;
 import com.second.version.user.UserEntity;
@@ -37,12 +39,33 @@ public class ArticleEntity {
     @Column(nullable = false, length = 20000, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci") // Adjusted length based on your requirements
     private String content;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "province_id", nullable = true)
+    @ManyToOne
+    @JoinColumn(name = "province_id", nullable = false)
     private ProvinceEntity province;
 
     private int date;
     private int month;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "generation_id", nullable = false, columnDefinition = "DEFAULT 1")
+    private Generation generation;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    public ArticleEntity(HashtagEntity hashtag, UserEntity editor, ProvinceEntity province, String title, String content, String image, int date, int month, Generation generation, Event event){
+        this.hashtagEntity = hashtag;
+        this.editor = editor;
+        this.province = province;
+        this.title = title;
+        this.content = content;
+        this.image = image;
+        this.date = date;
+        this.month = month;
+        this.generation = generation;
+        this.event = event;
+    }
 
     public ArticleEntity(HashtagEntity hashtag, UserEntity editor, String title, String image, String content, int date, int month, ProvinceEntity province) {
         this.hashtagEntity = hashtag;
